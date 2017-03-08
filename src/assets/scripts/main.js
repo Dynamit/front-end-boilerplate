@@ -2,4 +2,7 @@
  * Main scripts - Import JS modules here:
  */
 
-import './math';
+import { addition, subtraction } from './math';
+
+window.add = addition;
+window.subtract = subtraction;

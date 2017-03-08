@@ -7,6 +7,7 @@ const gulp = require('gulp');
 const gulpif = require('gulp-if');
 const gutil = require('gulp-util');
 const imagemin = require('gulp-imagemin');
+const notifier = require('node-notifier');
 const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
@@ -101,6 +102,10 @@ gulp.task('scripts', (done) => {
     if (result.errors.length) {
       result.errors.forEach((error) => {
         gutil.log(gutil.colors.red(error));
+        notifier.notify({
+          title: 'JS Build Error',
+          message: error,
+        });
       });
     }
     done();
@@ -169,7 +174,7 @@ gulp.task('serve', () => {
 
 
 // default build task
-gulp.task('default', ['clean', 'lint'], () => {
+gulp.task('default', ['clean'], () => {
   // define build tasks
   const tasks = [
     'templates',

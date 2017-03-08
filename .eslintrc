@@ -1,10 +1,13 @@
 {
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base"],
   "rules": {
-    "arrow-body-style": 0,
-    "comma-dangle": ["error", "always-multiline"],
-    "max-len": 0,
     "no-console": 0,
-    "quote-props": ["error", "consistent-as-needed"],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
   }
 }
+

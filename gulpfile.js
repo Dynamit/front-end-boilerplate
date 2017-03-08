@@ -3,7 +3,6 @@ const autoprefixer = require('gulp-autoprefixer');
 const browserSync = require('browser-sync');
 const cssnano = require('gulp-cssnano');
 const del = require('del');
-const eslint = require('gulp-eslint');
 const gulp = require('gulp');
 const gulpif = require('gulp-if');
 const gutil = require('gulp-util');
@@ -12,17 +11,23 @@ const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const webpack = require('webpack');
-const postcss = require('gulp-postcss');
-var Server = require('karma').Server;
+// const postcss = require('gulp-postcss');
+const Server = require('karma').Server;
 
 const reload = browserSync.reload;
 
+
+// PostCSS plugin to inline @import rules content
+// const postCSSimport = require('postcss-import');
+// const postCSScssnext = require('postcss-cssnext'); // Use tomorrow's CSS syntax, today
+// const precss = require('precss');
 // PostCSS Config Array
-const postCSSConfig = [
-  require('postcss-import')(), // PostCSS plugin to inline @import rules content
-  require('postcss-cssnext')(), // Use tomorrow's CSS syntax, today
-  require('precss')() // Sass-like markup in your CSS
-];
+// const postCSSConfig = [
+//   // Sass-like markup in your CSS
+//   postCSSimport(),
+//   postCSScssnext(),
+//   precss(),
+// ];
 
 // configuration
 const config = {
@@ -58,10 +63,10 @@ const config = {
 gulp.task('clean', del.bind(null, ['dist']));
 
 // tests
-gulp.task('test', function (done) {
+gulp.task('test', (done) => {
   new Server({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: false
+    configFile: `${__dirname}/karma.conf.js`,
+    singleRun: false,
   }, done).start();
 });
 
@@ -102,17 +107,9 @@ gulp.task('scripts', (done) => {
   });
 });
 
-gulp.task('lint', () => {
-  return gulp.src(config.scripts.watch)
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(gulpif(!config.dev, eslint.failAfterError()));
-});
-
-
 // SASS styles
-gulp.task('styles', () => {
-  return gulp.src(config.styles.src)
+gulp.task('styles', () =>
+ gulp.src(config.styles.src)
     .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: './node_modules',
@@ -123,8 +120,8 @@ gulp.task('styles', () => {
     .pipe(gulpif(!config.dev, cssnano({ autoprefixer: false })))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.styles.dest))
-    .pipe(gulpif(config.dev, reload({ stream: true })));
-});
+    .pipe(gulpif(config.dev, reload({ stream: true })))
+);
 
 // PostCSS Styles
 /*
@@ -138,15 +135,14 @@ gulp.task('styles', () => {
 
 
 // images
-gulp.task('images', () => {
-  return gulp.src(config.images.src)
+gulp.task('images', () =>
+  gulp.src(config.images.src)
     .pipe(imagemin({
       progressive: true,
       interlaced: true,
     }))
-    .pipe(gulp.dest(config.images.dest));
-});
-
+    .pipe(gulp.dest(config.images.dest))
+);
 
 // server
 gulp.task('serve', () => {

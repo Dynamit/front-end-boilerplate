@@ -2,7 +2,7 @@
   "author": "Dynamit",
   "license": "UNLICENSED",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "setup": "npm install && mv README.tpl.md README.md",
     "prestart": "npm install",

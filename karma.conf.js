@@ -1,4 +1,5 @@
 const webpack = require('karma-webpack');
+
 const conf = {
   scripts: {
     src: './src/assets/scripts/main',

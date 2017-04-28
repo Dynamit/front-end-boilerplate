@@ -125,8 +125,7 @@ gulp.task('styles', () =>
     .pipe(gulpif(!config.dev, cssnano({ autoprefixer: false })))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.styles.dest))
-    .pipe(gulpif(config.dev, reload({ stream: true })))
-);
+    .pipe(gulpif(config.dev, reload({ stream: true }))));
 
 // PostCSS Styles
 /*
@@ -146,8 +145,7 @@ gulp.task('images', () =>
       progressive: true,
       interlaced: true,
     }))
-    .pipe(gulp.dest(config.images.dest))
-);
+    .pipe(gulp.dest(config.images.dest)));
 
 // server
 gulp.task('serve', () => {
